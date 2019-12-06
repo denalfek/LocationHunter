@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  locationhunter.webapi:
+    image: ${DOCKER_REGISTRY-}locationhunter.webapi
+    build:
+      context: .
+      dockerfile: LocationHunter.WebApi/Dockerfile
+
+  postgres:
+    image: postgres:12.1
+    environment:
+      - POSTGRES_USER=owner
+      - POSTGRES_PASSWORD=locationHunter_owner_psswd
+      - POSTGRES_DB=locationHunter_db
+    ports:
+      - "5432:5432"
