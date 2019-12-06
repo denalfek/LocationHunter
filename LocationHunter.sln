@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationHunter.WebApi", "Lo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationHunter.Core", "LocationHunter.Core\LocationHunter.Core.csproj", "{9A960E22-B800-4E44-9FFE-C7A3D90BCD34}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationHunter.Dal", "LocationHunter.Dll\LocationHunter.Dal.csproj", "{F93A5C7C-D553-42D0-8D9B-00346AA16030}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9A960E22-B800-4E44-9FFE-C7A3D90BCD34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A960E22-B800-4E44-9FFE-C7A3D90BCD34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A960E22-B800-4E44-9FFE-C7A3D90BCD34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F93A5C7C-D553-42D0-8D9B-00346AA16030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F93A5C7C-D553-42D0-8D9B-00346AA16030}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F93A5C7C-D553-42D0-8D9B-00346AA16030}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F93A5C7C-D553-42D0-8D9B-00346AA16030}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

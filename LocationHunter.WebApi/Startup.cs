@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LocationHunter.Dal.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,10 @@ namespace LocationHunter.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            var connectionString = Configuration.GetConnectionString("LocationHunterConnectionString");
+
+            services.AddDefaultDbContext(connectionString);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
