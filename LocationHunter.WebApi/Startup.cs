@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LocationHunter.Dal;
 using LocationHunter.Dal.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +29,7 @@ namespace LocationHunter.WebApi
         {
             services.AddControllers();
 
-            var connectionString = Configuration.GetConnectionString("LocationHunterConnectionString");
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddDefaultDbContext(connectionString);
         }
@@ -48,6 +50,23 @@ namespace LocationHunter.WebApi
             {
                 endpoints.MapControllers();
             });
+
+            // ApplyDatabaseMigrations(app);
+        }
+
+        private void ApplyDatabaseMigrations(IApplicationBuilder app)
+        {
+            using (var serviceScope = app
+                .ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<LocationHunterDbContex>();
+                if (context.Database.GetPendingMigrations().Any())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }
