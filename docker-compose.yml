@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: LocationHunter.WebApi/Dockerfile
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres:12.1
@@ -15,3 +17,5 @@ services:
       - POSTGRES_DB=locationHunter_db
     ports:
       - "5432:5432"
+    volumes:
+      - './LocationHunter.Dal/Postgres-data:/var/lib/postgresql/data'

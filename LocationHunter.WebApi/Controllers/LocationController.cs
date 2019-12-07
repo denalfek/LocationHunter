@@ -26,7 +26,7 @@ namespace LocationHunter.WebApi.Controllers
 
             if(string.IsNullOrEmpty(ip)) { return BadRequest("Couldn't parse ip"); }
 
-            //await TestDb(ip);
+            await TestDb(ip);
             
             return Ok(ip);
         }
