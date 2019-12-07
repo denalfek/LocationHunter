@@ -5,7 +5,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
 WORKDIR /src
 COPY ["LocationHunter.WebApi/LocationHunter.WebApi.csproj", "LocationHunter.WebApi/"]
-COPY ["LocationHunter.Dll/LocationHunter.Dal.csproj", "LocationHunter.Dll/"]
+COPY ["LocationHunter.Dal/LocationHunter.Dal.csproj", "LocationHunter.Dal/"]
 COPY ["LocationHunter.Core/LocationHunter.Core.csproj", "LocationHunter.Core/"]
 RUN dotnet restore "LocationHunter.WebApi/LocationHunter.WebApi.csproj"
 COPY . .

@@ -3,6 +3,7 @@ version: '3.4'
 services:
   locationhunter.webapi:
     image: locationhunter.webapi
+    restart: always
     build:
       context: .
       dockerfile: LocationHunter.WebApi/Dockerfile
@@ -11,6 +12,7 @@ services:
 
   postgres:
     image: postgres:12.1
+    restart: always
     environment:
       - POSTGRES_USER=owner
       - POSTGRES_PASSWORD=locationHunter_owner_psswd
