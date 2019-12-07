@@ -6,11 +6,14 @@ namespace LocationHunter.Dal
 {
     public class LocationHunterDbContex : DbContext
     {
-        public LocationHunterDbContex() { }
-
+        public LocationHunterDbContex() 
+        {
+        }
+        
         public LocationHunterDbContex(DbContextOptions<LocationHunterDbContex> options) 
             : base(options)
-        { }
+        {
+        }
 
         public virtual DbSet<User> Users { get; set; }
 
@@ -18,7 +21,10 @@ namespace LocationHunter.Dal
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (optionsBuilder.IsConfigured) { return; }
+            if (optionsBuilder.IsConfigured) 
+            {
+                return;
+            }
 
             optionsBuilder.UseNpgsql("Host=locationHunter_host;Database=locationHunter_db;UserName=owner;Password=locationHunter_owner_psswd");
         }

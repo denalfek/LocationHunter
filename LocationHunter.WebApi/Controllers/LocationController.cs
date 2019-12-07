@@ -10,11 +10,11 @@ namespace LocationHunter.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GetLocationController : ControllerBase
+    public class LocationController : ControllerBase
     {
         private readonly LocationHunterDbContex _db;
 
-        public GetLocationController(LocationHunterDbContex db)
+        public LocationController(LocationHunterDbContex db)
         {
             _db = db;
         }
@@ -24,9 +24,9 @@ namespace LocationHunter.WebApi.Controllers
         {
             var ip = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
 
-            if(string.IsNullOrEmpty(ip)) { return Ok("Couldn't parse ip"); }
+            if(string.IsNullOrEmpty(ip)) { return BadRequest("Couldn't parse ip"); }
 
-            await TestDb(ip);
+            //await TestDb(ip);
             
             return Ok(ip);
         }

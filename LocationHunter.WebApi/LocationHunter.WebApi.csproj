@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LocationHunter.Core\LocationHunter.Core.csproj" />
-    <ProjectReference Include="..\LocationHunter.Dll\LocationHunter.Dal.csproj" />
+    <ProjectReference Include="..\LocationHunter.Dal\LocationHunter.Dal.csproj" />
   </ItemGroup>
 
 </Project>
