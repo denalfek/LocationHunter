@@ -10,8 +10,8 @@ namespace LocationHunter.Dal.ContextBuilders
         {
             builder.HasKey(l => new { l.Id });
 
-            builder.Property(l => l.Ip);
-            builder.Property(l => l.Name);
+            builder.Property(l => l.Ip).IsRequired();
+            builder.Property(l => l.Name).IsRequired();
         }
     }
 }

@@ -56,7 +56,7 @@ namespace LocationHunter.WebApi
                 endpoints.MapControllers();
             });
 
-            // ApplyDatabaseMigrations(app);
+            ApplyDatabaseMigrations(app);
         }
 
         private void ApplyDatabaseMigrations(IApplicationBuilder app)
@@ -67,6 +67,7 @@ namespace LocationHunter.WebApi
                 .CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<LocationHunterDbContex>();
+                
                 if (context.Database.GetPendingMigrations().Any())
                 {
                     context.Database.Migrate();

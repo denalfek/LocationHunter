@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace LocationHunter.WebApi.Controllers
@@ -28,38 +29,40 @@ namespace LocationHunter.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> TryIp()
         {
-            var testIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-            var ip = _httpContextAccessor.HttpContext.Request.GetIp().ToString();
+            var ip = _httpContextAccessor.HttpContext.Request.GetIp();
 
-            if(string.IsNullOrEmpty(ip)) { return BadRequest("Couldn't parse ip"); }
+            if(string.IsNullOrEmpty(ip.ToString())) { return BadRequest("Couldn't parse ip"); }
 
-            await TestDb(ip);
+            var result = await GetLocationName(ip);
             
-            return Ok(ip);
+            return Ok(result);
         }
 
-        private async Task TestDb(string ip)
+        private async Task TestDb(IPAddress ip)
+        {
+            _db.Locations.Add(new Location() { Ip = ip, Name = "localhost" });
+            await _db.SaveChangesAsync();
+        }
+
+        private async Task<string> GetLocationName(IPAddress ip)
         {
             try
             {
-                _db.ConnectionOpen();
+                await TestDb(ip);
 
-                var test = _db.Database;
-
-                _db.Users.Add(new User { Ip = ip });
-                await _db.SaveChangesAsync();
+                var locationName = _db.Locations.FirstOrDefault(l => l.Ip == ip).Name;
+                
+                if (!string.IsNullOrEmpty(locationName))
+                {
+                    return locationName;
+                }
             }
             catch (Exception ex)
             {
                 var test = ex;
             }
 
-            var user = _db.Users.FirstOrDefault(u => u.Ip == ip);
-
-            if (user != null)
-            {
-                var id = user.Id;
-            }
+            return $"Couldn't get location by your ip: {ip.ToString()}";
         }
     }
 }

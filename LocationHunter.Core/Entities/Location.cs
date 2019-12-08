@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Net;
 
 namespace LocationHunter.Core.Entities
 {
@@ -8,7 +8,7 @@ namespace LocationHunter.Core.Entities
     {
         public int Id { get; set; }
 
-        public string Ip { get; set; }
+        public IPAddress Ip { get; set; }
 
         public string Name { get; set; }
     }
