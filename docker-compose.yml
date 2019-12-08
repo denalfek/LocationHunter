@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.7'
 
 services:
   locationhunter.webapi:
@@ -10,14 +10,21 @@ services:
       dockerfile: LocationHunter.WebApi/Dockerfile
     depends_on:
       - postgres
+    networks:
+      - locationhunter-network
 
   postgres:
     image: postgres
     container_name: db
     restart: always
     environment:
-      - POSTGRES_USER=owner
-      - POSTGRES_PASSWORD=locationHunter_owner_psswd
+      - POSTGRES_USER=postgres
       - POSTGRES_DB=locationHunter_db
     ports:
       - "5432:5432"
+    networks:
+      - locationhunter-network
+
+networks:
+  locationhunter-network:
+    driver: bridge

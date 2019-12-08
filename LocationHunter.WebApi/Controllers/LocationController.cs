@@ -33,15 +33,26 @@ namespace LocationHunter.WebApi.Controllers
 
             if(string.IsNullOrEmpty(ip)) { return BadRequest("Couldn't parse ip"); }
 
-            //await TestDb(ip);
+            await TestDb(ip);
             
             return Ok(ip);
         }
 
         private async Task TestDb(string ip)
         {
-            _db.Users.Add(new User { Ip = ip });
-            await _db.SaveChangesAsync();
+            try
+            {
+                _db.ConnectionOpen();
+
+                var test = _db.Database;
+
+                _db.Users.Add(new User { Ip = ip });
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                var test = ex;
+            }
 
             var user = _db.Users.FirstOrDefault(u => u.Ip == ip);
 

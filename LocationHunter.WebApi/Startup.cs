@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Npgsql;
 
 namespace LocationHunter.WebApi
 {
@@ -28,6 +29,9 @@ namespace LocationHunter.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            var d = Environment.GetEnvironmentVariable("POSTGRES_USER");
+            var d1 = Environment.GetEnvironmentVariable("POSTGRES_DB");
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
