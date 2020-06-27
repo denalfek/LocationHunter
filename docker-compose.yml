@@ -8,23 +8,3 @@ services:
     build:
       context: .
       dockerfile: LocationHunter.WebApi/Dockerfile
-    depends_on:
-      - postgres
-    networks:
-      - locationhunter-network
-
-  postgres:
-    image: postgres
-    container_name: db
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=locationHunter_db
-    ports:
-      - "5432:5432"
-    networks:
-      - locationhunter-network
-
-networks:
-  locationhunter-network:
-    driver: bridge

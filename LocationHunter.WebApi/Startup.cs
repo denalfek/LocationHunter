@@ -30,12 +30,12 @@ namespace LocationHunter.WebApi
         {
             services.AddControllers();
 
-            var d = Environment.GetEnvironmentVariable("POSTGRES_USER");
-            var d1 = Environment.GetEnvironmentVariable("POSTGRES_DB");
+            //var d = Environment.GetEnvironmentVariable("POSTGRES_USER");
+            //var d1 = Environment.GetEnvironmentVariable("POSTGRES_DB");
 
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            //var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-            services.AddDefaultDbContext(connectionString);
+            // services.AddDefaultDbContext(connectionString);
             services.AddHttpContextAccessor();
         }
 
@@ -56,7 +56,7 @@ namespace LocationHunter.WebApi
                 endpoints.MapControllers();
             });
 
-            ApplyDatabaseMigrations(app);
+            // ApplyDatabaseMigrations(app);
         }
 
         private void ApplyDatabaseMigrations(IApplicationBuilder app)

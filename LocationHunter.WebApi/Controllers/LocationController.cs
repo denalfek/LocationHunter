@@ -1,6 +1,7 @@
 ﻿using LocationHunter.Core.Entities;
 using LocationHunter.Dal;
 using LocationHunter.WebApi.Extensions;
+using MaxMind.GeoIP2;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,17 +20,27 @@ namespace LocationHunter.WebApi.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public LocationController(
-            LocationHunterDbContex db,
+            //LocationHunterDbContex db,
             IHttpContextAccessor httpContextAccerssor)
         {
-            _db = db;
+            // _db = db;
             _httpContextAccessor = httpContextAccerssor;
         }
 
-        [HttpGet]
+        [HttpGet, Route("test")]
         public async Task<IActionResult> TryIp()
         {
             var ip = _httpContextAccessor.HttpContext.Request.GetIp();
+
+            var client = new WebServiceClient(345189, "i8vp4FC9jhOGKMih");
+            try
+            {
+                var city = await client.CityAsync(ip);
+            }
+            catch (Exception ex)
+            {
+                return Ok(ex.Message);
+            }
 
             if(string.IsNullOrEmpty(ip.ToString())) { return BadRequest("Couldn't parse ip"); }
 
