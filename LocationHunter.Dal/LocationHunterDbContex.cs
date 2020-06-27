@@ -25,7 +25,7 @@ namespace LocationHunter.Dal
             }
 
             optionsBuilder
-                .UseNpgsql("Server=postgres;Database=locationHunter_db;User ID=postgres;Password=;Port=5432");
+                .UseNpgsql("Server=postgres;Port=5432;Database=locationHunter_db;Username=root;Password=secretPassword");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -20,10 +20,10 @@ namespace LocationHunter.WebApi.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public LocationController(
-            //LocationHunterDbContex db,
+            LocationHunterDbContex db,
             IHttpContextAccessor httpContextAccerssor)
         {
-            // _db = db;
+            _db = db;
             _httpContextAccessor = httpContextAccerssor;
         }
 
@@ -31,6 +31,8 @@ namespace LocationHunter.WebApi.Controllers
         public async Task<IActionResult> TryIp()
         {
             var ip = _httpContextAccessor.HttpContext.Request.GetIp();
+
+
 
             var client = new WebServiceClient(345189, "i8vp4FC9jhOGKMih");
             try

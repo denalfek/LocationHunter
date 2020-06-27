@@ -5,6 +5,18 @@ services:
     image: locationhunter.webapi
     container_name: webapi
     restart: always
+    depends_on:
+      - postgres
     build:
       context: .
       dockerfile: LocationHunter.WebApi/Dockerfile
+
+  postgres:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_DB=LocationHunter_db
+      - POSTGRES_PASSWORD=secretPassword
+    ports:
+      - "5432:5432"
