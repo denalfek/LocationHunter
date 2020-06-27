@@ -10,7 +10,7 @@ namespace LocationHunter.Dal
         {
         }
         
-        public LocationHunterDbContex(DbContextOptions<LocationHunterDbContex> options) 
+        public LocationHunterDbContex(DbContextOptions<LocationHunterDbContex> options)
             : base(options)
         {
         }
@@ -19,7 +19,7 @@ namespace LocationHunter.Dal
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (optionsBuilder.IsConfigured) 
+            if (optionsBuilder.IsConfigured)
             {
                 return;
             }
