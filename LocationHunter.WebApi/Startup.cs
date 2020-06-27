@@ -1,5 +1,9 @@
 using System.Linq;
 using LocationHunter.Dal.Extensions;
+using LocationHunter.Dal.Repositories;
+using LocationHunter.Dal.Repositories.Interfaces;
+using LocationHunter.WebApi.Services;
+using LocationHunter.WebApi.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +34,8 @@ namespace LocationHunter.WebApi
                 (DbConnectionExtension)services
                     .Single(x => x.ServiceType == typeof(DbConnectionExtension))
                     .ImplementationInstance);
+            services.AddTransient<ILocationRepository, LocationRepository>();
+            services.AddTransient<IIpService, IpService>();
             services.AddHttpContextAccessor();
         }
 

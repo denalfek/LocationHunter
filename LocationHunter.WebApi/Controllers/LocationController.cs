@@ -1,6 +1,7 @@
 ﻿using LocationHunter.Core.Entities;
 using LocationHunter.Dal;
 using LocationHunter.WebApi.Extensions;
+using LocationHunter.WebApi.Services.Interfaces;
 using MaxMind.GeoIP2;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,54 +17,42 @@ namespace LocationHunter.WebApi.Controllers
     [Route("[controller]")]
     public class LocationController : ControllerBase
     {
-        private readonly LocationHunterDbContex _db;
+        private readonly IIpService _ipService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public LocationController(
-            LocationHunterDbContex db,
+            IIpService ipService,
             IHttpContextAccessor httpContextAccerssor)
         {
-            _db = db;
+            _ipService = ipService;
             _httpContextAccessor = httpContextAccerssor;
         }
 
-        [HttpGet, Route("test")]
-        public async Task<IActionResult> TryIp()
+        [HttpGet, Route("country")]
+        public async Task<IActionResult> GetCountryByIp()
         {
             var ip = _httpContextAccessor.HttpContext.Request.GetIp();
 
             if(string.IsNullOrEmpty(ip.ToString())) { return BadRequest("Couldn't parse ip"); }
 
-            var result = await GetLocationName(ip);
-            
+            var result = await _ipService.GetLocationsAsync(1);
+
             return Ok(result);
         }
 
-        private async Task TestDb(IPAddress ip)
+        [HttpGet, Route("test")]
+        public async Task<IActionResult> TestIpStack()
         {
-            _db.Locations.Add(new Location() { Ip = ip, Name = "localhost" });
-            await _db.SaveChangesAsync();
-        }
+            var ip = _httpContextAccessor.HttpContext.Request.GetIp();
 
-        private async Task<string> GetLocationName(IPAddress ip)
-        {
-            try
+            using var client = new WebClient
             {
-                await TestDb(ip);
-
-                var locationName = _db.Locations.FirstOrDefault(l => l.Ip == ip).Name;
-                
-                if (!string.IsNullOrEmpty(locationName))
-                {
-                    return locationName;
-                }
-            }
-            catch (Exception ex)
-            {
-                var test = ex;
-            }
-
-            return $"Couldn't get location by your ip: {ip}";
+                BaseAddress = "http://api.ipstack.com/"
+            };
+            const string accessKeyStr =
+                "?access_key=928f5a5bb4d4963a5c90cc7d31e382e6";
+            var request = ip.ToString() + accessKeyStr;
+            return Ok(client.DownloadString(request));
         }
     }
 }
