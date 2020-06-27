@@ -63,7 +63,7 @@ namespace LocationHunter.WebApi.Controllers
                 var test = ex;
             }
 
-            return $"Couldn't get location by your ip: {ip.ToString()}";
+            return $"Couldn't get location by your ip: {ip}";
         }
     }
 }

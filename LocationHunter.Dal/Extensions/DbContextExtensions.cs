@@ -7,11 +7,11 @@ namespace LocationHunter.Dal.Extensions
 {
     public static class DbContextExtensions
     {
-        public static IServiceCollection AddDefaultDbContext(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddDefaultDbContext(this IServiceCollection services, DbConnectionExtension dbConnection)
         {
             return services.AddDbContext<LocationHunterDbContex>(options =>
             {
-                options.UseNpgsql(connectionString);
+                options.UseNpgsql(dbConnection.ConnectionString);
             });
         }
 
