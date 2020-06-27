@@ -1,18 +1,22 @@
 ﻿using LocationHunter.Core.Entities;
 using LocationHunter.Dal.ContextBuilders;
+using LocationHunter.Dal.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace LocationHunter.Dal
 {
     public class LocationHunterDbContex : DbContext
     {
+        private readonly string _connStr;
+
         public LocationHunterDbContex() 
         {
         }
         
-        public LocationHunterDbContex(DbContextOptions<LocationHunterDbContex> options)
+        public LocationHunterDbContex(DbContextOptions<LocationHunterDbContex> options, DbConnectionExtension dbConnection)
             : base(options)
         {
+            _connStr = dbConnection.ConnectionString;
         }
 
         public virtual DbSet<Location> Locations { get; set; }
@@ -25,7 +29,7 @@ namespace LocationHunter.Dal
             }
 
             optionsBuilder
-                .UseNpgsql("Server=postgres;Port=5432;Database=locationHunter_db;Username=root;Password=secretPassword");
+                .UseNpgsql(_connStr);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

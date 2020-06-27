@@ -25,6 +25,7 @@ namespace LocationHunter.WebApi
             services.AddControllers();
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddSingleton(typeof(DbConnectionExtension), new DbConnectionExtension() { ConnectionString = connectionString});
 
             services.AddDefaultDbContext(connectionString);
             services.AddHttpContextAccessor();

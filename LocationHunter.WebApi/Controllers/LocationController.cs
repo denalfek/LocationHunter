@@ -32,18 +32,6 @@ namespace LocationHunter.WebApi.Controllers
         {
             var ip = _httpContextAccessor.HttpContext.Request.GetIp();
 
-
-
-            var client = new WebServiceClient(345189, "i8vp4FC9jhOGKMih");
-            try
-            {
-                var city = await client.CityAsync(ip);
-            }
-            catch (Exception ex)
-            {
-                return Ok(ex.Message);
-            }
-
             if(string.IsNullOrEmpty(ip.ToString())) { return BadRequest("Couldn't parse ip"); }
 
             var result = await GetLocationName(ip);
