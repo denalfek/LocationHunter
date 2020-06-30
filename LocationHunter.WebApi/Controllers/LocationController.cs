@@ -5,10 +5,12 @@ using LocationHunter.WebApi.Services.Interfaces;
 using MaxMind.GeoIP2;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace LocationHunter.WebApi.Controllers
@@ -19,13 +21,18 @@ namespace LocationHunter.WebApi.Controllers
     {
         private readonly IIpService _ipService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        private const string ClientName = "ipStack";
 
         public LocationController(
             IIpService ipService,
-            IHttpContextAccessor httpContextAccerssor)
+            IHttpContextAccessor httpContextAccerssor,
+            IHttpClientFactory httpClientFactory)
         {
             _ipService = ipService;
             _httpContextAccessor = httpContextAccerssor;
+            _httpClientFactory = httpClientFactory;
         }
 
         [HttpGet, Route("country")]
@@ -45,14 +52,25 @@ namespace LocationHunter.WebApi.Controllers
         {
             var ip = _httpContextAccessor.HttpContext.Request.GetIp();
 
-            using var client = new WebClient
-            {
-                BaseAddress = "http://api.ipstack.com/"
-            };
             const string accessKeyStr =
                 "?access_key=928f5a5bb4d4963a5c90cc7d31e382e6";
+
+            using var client = _httpClientFactory.CreateClient(ClientName);
             var request = ip.ToString() + accessKeyStr;
-            return Ok(client.DownloadString(request));
+            var requestMsg = new HttpRequestMessage(HttpMethod.Get, request);
+            var response = await client.SendAsync(requestMsg);
+            var d = await response.Content.ReadAsStringAsync();
+
+            try
+            {
+
+                var resp = JsonConvert.DeserializeObject<ResponseModel>(d);
+            }
+            catch (Exception ex)
+            {
+                var e = ex.Message;
+            }
+            return Ok();
         }
     }
 }

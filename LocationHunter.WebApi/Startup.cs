@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using LocationHunter.Dal.Extensions;
 using LocationHunter.Dal.Repositories;
@@ -36,6 +37,10 @@ namespace LocationHunter.WebApi
                     .ImplementationInstance);
             services.AddTransient<ILocationRepository, LocationRepository>();
             services.AddTransient<IIpService, IpService>();
+            services.AddHttpClient("ipStack", c =>
+            {
+                c.BaseAddress = new Uri(Configuration.GetSection("IpStack:Url").Value);
+            });
             services.AddHttpContextAccessor();
         }
 
