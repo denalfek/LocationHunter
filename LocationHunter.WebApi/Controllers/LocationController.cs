@@ -20,19 +20,17 @@ namespace LocationHunter.WebApi.Controllers
     public class LocationController : ControllerBase
     {
         private readonly IIpService _ipService;
+        private readonly IHttpClientSevice _httpClientSevice;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IHttpClientFactory _httpClientFactory;
-
-        private const string ClientName = "ipStack";
 
         public LocationController(
             IIpService ipService,
-            IHttpContextAccessor httpContextAccerssor,
-            IHttpClientFactory httpClientFactory)
+            IHttpClientSevice httpClientSevice,
+            IHttpContextAccessor httpContextAccerssor)
         {
             _ipService = ipService;
+            _httpClientSevice = httpClientSevice;
             _httpContextAccessor = httpContextAccerssor;
-            _httpClientFactory = httpClientFactory;
         }
 
         [HttpGet, Route("country")]
@@ -52,25 +50,10 @@ namespace LocationHunter.WebApi.Controllers
         {
             var ip = _httpContextAccessor.HttpContext.Request.GetIp();
 
-            const string accessKeyStr =
-                "?access_key=928f5a5bb4d4963a5c90cc7d31e382e6";
+            var testIp = IPAddress.Parse("212.35.179.101");
 
-            using var client = _httpClientFactory.CreateClient(ClientName);
-            var request = ip.ToString() + accessKeyStr;
-            var requestMsg = new HttpRequestMessage(HttpMethod.Get, request);
-            var response = await client.SendAsync(requestMsg);
-            var d = await response.Content.ReadAsStringAsync();
-
-            try
-            {
-
-                var resp = JsonConvert.DeserializeObject<ResponseModel>(d);
-            }
-            catch (Exception ex)
-            {
-                var e = ex.Message;
-            }
-            return Ok();
+            var d = await _httpClientSevice.GetLocation(testIp);
+            return Ok(d);
         }
     }
 }

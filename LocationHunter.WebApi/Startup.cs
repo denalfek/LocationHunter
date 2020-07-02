@@ -3,6 +3,7 @@ using System.Linq;
 using LocationHunter.Dal.Extensions;
 using LocationHunter.Dal.Repositories;
 using LocationHunter.Dal.Repositories.Interfaces;
+using LocationHunter.WebApi.Extensions;
 using LocationHunter.WebApi.Services;
 using LocationHunter.WebApi.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -36,11 +37,17 @@ namespace LocationHunter.WebApi
                     .Single(x => x.ServiceType == typeof(DbConnectionExtension))
                     .ImplementationInstance);
             services.AddTransient<ILocationRepository, LocationRepository>();
-            services.AddTransient<IIpService, IpService>();
+            services.AddSingleton(typeof(HttpClientExtensions),
+                new HttpClientExtensions()
+                {
+                    AccessKey = Configuration.GetSection("IpStack:AccessKey").Value
+                });
             services.AddHttpClient("ipStack", c =>
             {
                 c.BaseAddress = new Uri(Configuration.GetSection("IpStack:Url").Value);
             });
+            services.AddTransient<IHttpClientSevice, HttpClientSevice>();
+            services.AddTransient<IIpService, IpService>();
             services.AddHttpContextAccessor();
         }
 
