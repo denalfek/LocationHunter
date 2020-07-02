@@ -25,9 +25,9 @@ namespace LocationHunter.WebApi.Services
 
         public async Task<IpStackResponseModel> GetLocation(IPAddress iPAddress)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, string.Concat(iPAddress, _accessKey));
             using var client = _httpClientFactory.CreateClient(_clientName);
-            var response = await client.SendAsync(request);
+            var response = await client.SendAsync(
+                    new HttpRequestMessage(HttpMethod.Get, string.Concat(iPAddress, _accessKey)));
 
             return JsonConvert
                 .DeserializeObject<IpStackResponseModel>(await

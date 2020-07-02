@@ -37,13 +37,11 @@ namespace LocationHunter.WebApi.Controllers
 
             var testIp = IPAddress.Parse("212.35.179.101");
 
-            var d = await _httpClientSevice.GetLocation(testIp);
+            var response = await _httpClientSevice.GetLocation(testIp);
 
-            // await _ipService.SaveLocationAsync(d);
+            // await _ipService.SaveLocationAsync(response);
 
-            var result = await _ipService.GetLocationsAsync(1);
-
-            return Ok(d);
+            return Ok(response);
         }
     }
 }

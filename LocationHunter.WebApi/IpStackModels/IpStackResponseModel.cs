@@ -17,8 +17,12 @@ namespace LocationHunter.WebApi.IpStackModels
         public string RegionName { get; set; }
 
         public string City { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
+        
+        [JsonProperty(PropertyName = "latitude")]
+        public double Latitude { get; set; }
+
+        [JsonProperty(PropertyName = "longitude")]
+        public double Longitude { get; set; }
         public IpStackLocationResponseModel Location { get; set; }
     }
 }

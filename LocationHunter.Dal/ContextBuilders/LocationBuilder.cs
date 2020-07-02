@@ -9,9 +9,7 @@ namespace LocationHunter.Dal.ContextBuilders
         public void Configure(EntityTypeBuilder<Location> builder)
         {
             builder.HasKey(l => new { l.Id });
-
             builder.Property(l => l.Ip).IsRequired();
-            builder.Property(l => l.Name).IsRequired();
         }
     }
 }

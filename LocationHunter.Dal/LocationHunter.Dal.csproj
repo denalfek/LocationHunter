@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20191208122546_InitialMigration.cs" />
-    <Compile Remove="Migrations\20191208122546_InitialMigration.Designer.cs" />
-    <Compile Remove="Migrations\20191208130539_CreateLocationsTable.cs" />
-    <Compile Remove="Migrations\20191208130539_CreateLocationsTable.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
       <PrivateAssets>all</PrivateAssets>
