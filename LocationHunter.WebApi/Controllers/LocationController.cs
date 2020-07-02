@@ -33,26 +33,24 @@ namespace LocationHunter.WebApi.Controllers
             _httpContextAccessor = httpContextAccerssor;
         }
 
-        [HttpGet, Route("country")]
-        public async Task<IActionResult> GetCountryByIp()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
             var ip = _httpContextAccessor.HttpContext.Request.GetIp();
 
-            if(string.IsNullOrEmpty(ip.ToString())) { return BadRequest("Couldn't parse ip"); }
-
-            var result = await _ipService.GetLocationsAsync(1);
-
-            return Ok(result);
-        }
-
-        [HttpGet, Route("test")]
-        public async Task<IActionResult> TestIpStack()
-        {
-            var ip = _httpContextAccessor.HttpContext.Request.GetIp();
+            if(string.IsNullOrEmpty(ip.ToString()))
+            {
+                return BadRequest("Couldn't parse ip");
+            }
 
             var testIp = IPAddress.Parse("212.35.179.101");
 
             var d = await _httpClientSevice.GetLocation(testIp);
+
+            // await _ipService.SaveLocationAsync(d);
+
+            var result = await _ipService.GetLocationsAsync(1);
+
             return Ok(d);
         }
     }

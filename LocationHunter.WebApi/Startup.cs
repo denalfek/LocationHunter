@@ -40,9 +40,10 @@ namespace LocationHunter.WebApi
             services.AddSingleton(typeof(HttpClientExtensions),
                 new HttpClientExtensions()
                 {
-                    AccessKey = Configuration.GetSection("IpStack:AccessKey").Value
+                    AccessKey = Configuration.GetSection("IpStack:AccessKey").Value,
+                    ClientName = Configuration.GetSection("IpStack:ClientName").Value
                 });
-            services.AddHttpClient("ipStack", c =>
+            services.AddHttpClient("IpStack", c =>
             {
                 c.BaseAddress = new Uri(Configuration.GetSection("IpStack:Url").Value);
             });

@@ -1,4 +1,5 @@
 ﻿using LocationHunter.WebApi.Extensions;
+using LocationHunter.WebApi.IpStackModels;
 using LocationHunter.WebApi.Services.Interfaces;
 using Newtonsoft.Json;
 using System.Net;
@@ -11,7 +12,7 @@ namespace LocationHunter.WebApi.Services
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly string _accessKey;
-        private const string _clientName = "ipStack";
+        private readonly string _clientName;
 
         public HttpClientSevice(
             IHttpClientFactory httpClientFactory,
@@ -19,15 +20,18 @@ namespace LocationHunter.WebApi.Services
         {
             _httpClientFactory = httpClientFactory;
             _accessKey = httpClientExtensions.AccessKey;
+            _clientName = httpClientExtensions.ClientName;
         }
 
-        public async Task<ResponseModel> GetLocation(IPAddress iPAddress)
+        public async Task<IpStackResponseModel> GetLocation(IPAddress iPAddress)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, string.Concat(iPAddress, _accessKey));
             using var client = _httpClientFactory.CreateClient(_clientName);
             var response = await client.SendAsync(request);
 
-            return JsonConvert.DeserializeObject<ResponseModel>(await response.Content.ReadAsStringAsync());
+            return JsonConvert
+                .DeserializeObject<IpStackResponseModel>(await
+                    response.Content.ReadAsStringAsync());
         }
     }
 }
