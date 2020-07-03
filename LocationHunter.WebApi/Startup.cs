@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using AutoMapper;
 using LocationHunter.Dal.Extensions;
 using LocationHunter.Dal.Repositories;
 using LocationHunter.Dal.Repositories.Interfaces;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace LocationHunter.WebApi
@@ -48,7 +50,8 @@ namespace LocationHunter.WebApi
                 c.BaseAddress = new Uri(Configuration.GetSection("IpStack:Url").Value);
             });
             services.AddTransient<IHttpClientSevice, HttpClientSevice>();
-            services.AddTransient<IIpService, IpService>();
+            services.AddTransient<ILocationService, LocationService>();
+            services.AddAutoMapper(typeof(Startup));
             services.AddHttpContextAccessor();
         }
 

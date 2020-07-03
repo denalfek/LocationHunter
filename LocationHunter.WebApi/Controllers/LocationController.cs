@@ -11,12 +11,12 @@ namespace LocationHunter.WebApi.Controllers
     [Route("[controller]")]
     public class LocationController : ControllerBase
     {
-        private readonly IIpService _ipService;
+        private readonly ILocationService _ipService;
         private readonly IHttpClientSevice _httpClientSevice;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public LocationController(
-            IIpService ipService,
+            ILocationService ipService,
             IHttpClientSevice httpClientSevice,
             IHttpContextAccessor httpContextAccerssor)
         {
