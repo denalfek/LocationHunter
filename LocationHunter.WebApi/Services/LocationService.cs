@@ -30,7 +30,5 @@ namespace LocationHunter.WebApi.Services
             var location = _mapper.Map<Location>(responseModel);
             await _locationRepository.SaveLocationAsync(location);
         }
-
-
     }
 }

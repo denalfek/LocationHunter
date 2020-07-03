@@ -36,10 +36,9 @@ namespace LocationHunter.WebApi.Controllers
             }
 
             var testIp = IPAddress.Parse("212.35.179.101");
-
             var response = await _httpClientSevice.GetLocation(testIp);
 
-            // await _ipService.SaveLocationAsync(response);
+            await _ipService.SaveLocationAsync(response);
 
             return Ok(response);
         }
