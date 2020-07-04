@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace LocationHunter.WebApi.Services
+namespace LocationHunter.Core.Services
 {
     public class HttpClientSevice : IHttpClientSevice
     {
