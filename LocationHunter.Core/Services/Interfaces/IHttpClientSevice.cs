@@ -1,11 +1,11 @@
-﻿using LocationHunter.WebApi.IpStackModels;
+﻿using LocationHunter.Core.Entities;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace LocationHunter.WebApi.Services.Interfaces
+namespace LocationHunter.Core.Services.Interfaces
 {
     public interface IHttpClientSevice
     {
-        Task<IpStackResponseModel> GetLocation(IPAddress iPAddress);
+        Task<Location> GetLocation(IPAddress iPAddress);
     }
 }

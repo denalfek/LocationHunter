@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using LocationHunter.Dal.Configurations;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
@@ -7,7 +8,7 @@ namespace LocationHunter.Dal.Extensions
 {
     public static class DbContextExtensions
     {
-        public static IServiceCollection AddDefaultDbContext(this IServiceCollection services, DbConnectionExtension dbConnection)
+        public static IServiceCollection AddDefaultDbContext(this IServiceCollection services, DbConnectionConfig dbConnection)
         {
             return services.AddDbContext<LocationHunterDbContex>(options =>
             {

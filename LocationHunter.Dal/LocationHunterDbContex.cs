@@ -14,7 +14,7 @@ namespace LocationHunter.Dal
         }
         
         public LocationHunterDbContex(DbContextOptions<LocationHunterDbContex> options,
-            DbConnectionExtension dbConnection)
+            DbConnectionConfig dbConnection)
             : base(options)
         {
             _connStr = dbConnection.ConnectionString;

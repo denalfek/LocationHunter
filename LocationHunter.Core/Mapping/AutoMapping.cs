@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using LocationHunter.Core.Entities;
-using LocationHunter.WebApi.IpStackModels;
+using LocationHunter.Core.IpStackModels;
 
-namespace LocationHunter.WebApi.Mapping
+namespace LocationHunter.Core.Mapping
 {
     public class AutoMapping : Profile
     {

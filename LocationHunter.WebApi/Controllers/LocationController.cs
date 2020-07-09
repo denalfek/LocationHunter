@@ -3,6 +3,7 @@ using LocationHunter.WebApi.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace LocationHunter.WebApi.Controllers
@@ -14,6 +15,7 @@ namespace LocationHunter.WebApi.Controllers
         private readonly ILocationService _ipService;
         private readonly IHttpClientSevice _httpClientSevice;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpClientFactory httpClientFactory;
 
         public LocationController(
             ILocationService ipService,

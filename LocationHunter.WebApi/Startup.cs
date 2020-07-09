@@ -1,10 +1,10 @@
 using System;
 using System.Linq;
 using AutoMapper;
+using LocationHunter.Dal.Configurations;
 using LocationHunter.Dal.Extensions;
 using LocationHunter.Dal.Repositories;
 using LocationHunter.Dal.Repositories.Interfaces;
-using LocationHunter.WebApi.Extensions;
 using LocationHunter.WebApi.Services;
 using LocationHunter.WebApi.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -28,18 +28,18 @@ namespace LocationHunter.WebApi
         {
             services.AddControllers();
             services.AddSingleton(
-                typeof(DbConnectionExtension),
-                new DbConnectionExtension()
+                typeof(DbConnectionConfig),
+                new DbConnectionConfig()
                 {
                     ConnectionString = Configuration.GetConnectionString("DefaultConnection")
                 });
             services.AddDefaultDbContext(
-                (DbConnectionExtension)services
-                    .Single(x => x.ServiceType == typeof(DbConnectionExtension))
+                (DbConnectionConfig)services
+                    .Single(x => x.ServiceType == typeof(DbConnectionConfig))
                     .ImplementationInstance);
             services.AddTransient<ILocationRepository, LocationRepository>();
-            services.AddSingleton(typeof(HttpClientExtensions),
-                new HttpClientExtensions()
+            services.AddSingleton(typeof(HttpClientConfig),
+                new HttpClientConfig()
                 {
                     AccessKey = Configuration.GetSection("IpStack:AccessKey").Value,
                     ClientName = Configuration.GetSection("IpStack:ClientName").Value

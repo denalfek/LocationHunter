@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace LocationHunter.WebApi.IpStackModels
+namespace LocationHunter.Core.IpStackModels
 {
     public class IpStackResponseModel
     {

@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace LocationHunter.Core.Entities
+﻿namespace LocationHunter.Core.Entities
 {
     public class Location
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public string Ip { get; set; }
 

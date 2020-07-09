@@ -1,6 +1,6 @@
-﻿using LocationHunter.WebApi.Extensions;
-using LocationHunter.WebApi.IpStackModels;
-using LocationHunter.WebApi.Services.Interfaces;
+﻿using LocationHunter.Core.Configurations;
+using LocationHunter.Core.Entities;
+using LocationHunter.Core.Services.Interfaces;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
@@ -10,26 +10,25 @@ namespace LocationHunter.Core.Services
 {
     public class HttpClientSevice : IHttpClientSevice
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private static HttpClient _httpClient;
         private readonly string _accessKey;
-        private readonly string _clientName;
 
         public HttpClientSevice(
-            IHttpClientFactory httpClientFactory,
-            HttpClientExtensions httpClientExtensions)
+            HttpClientConfig httpClientConfig)
         {
-            _httpClientFactory = httpClientFactory;
-            _accessKey = httpClientExtensions.AccessKey;
-            _clientName = httpClientExtensions.ClientName;
+            if (_httpClient == null) { }
+                _httpClient = new HttpClient
+                {
+                    BaseAddress = httpClientConfig.Uri
+                };
         }
 
-        public async Task<IpStackResponseModel> GetLocation(IPAddress iPAddress)
-        {
-            using var client = _httpClientFactory.CreateClient(_clientName);
-            var response = await client.SendAsync(
+        public async Task<Location> GetLocation(IPAddress iPAddress)
+        {            
+            var response = await _httpClient.SendAsync(
                     new HttpRequestMessage(HttpMethod.Get, string.Concat(iPAddress, _accessKey)));
 
-            return JsonConvert
+            var responseModel = JsonConvert
                 .DeserializeObject<IpStackResponseModel>(await
                     response.Content.ReadAsStringAsync());
         }
